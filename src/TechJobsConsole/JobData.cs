@@ -49,13 +49,32 @@ namespace TechJobsConsole
             {
                 string aValue = row[column];
 
-                if (aValue.Contains(value))
+                if (aValue.ToLower().Contains(value.ToLower()))
                 {
                     jobs.Add(row);
                 }
             }
 
             return jobs;
+        }
+
+        public static List<Dictionary<string, string>> FindByValue(string value)
+        {
+            LoadData();
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+            foreach (Dictionary<string, string> row in AllJobs)
+            {
+                foreach (KeyValuePair<string, string> rowCategory in row)
+                {
+                    if (rowCategory.Value.ToLower().Contains(value.ToLower()))
+                    {
+                        jobs.Add(row);
+                        break;
+                    }
+                }
+            }
+
+                return jobs;
         }
 
         /*
@@ -138,5 +157,7 @@ namespace TechJobsConsole
 
             return rowValues.ToArray();
         }
+
+        
     }
 }
